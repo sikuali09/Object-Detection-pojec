@@ -1,0 +1,69 @@
+# Live Object Detection with Faster-RCNN
+
+This project implements live object detection using a pre-trained Faster-RCNN (ResNet-50) model and OpenCV for video capture. It can detect a wide variety of objects in real-time, such as people, vehicles, animals, and more.
+
+## Features
+
+- Real-time object detection from a live video stream (webcam).
+- Bounding boxes and class labels displayed on the detected objects.
+- Adjustable confidence threshold for filtering detections.
+- Color-coded bounding boxes for each object category.
+
+## Table of Contents
+
+1. [Setup](#setup)
+2. [Project Structure](#project-structure)
+3. [Running the Project](#running-the-project)
+4. [Functions and Code Breakdown](#functions-and-code-breakdown)
+5. [Usage](#usage)
+6. [Dependencies](#dependencies)
+7. [License](#license)
+
+---
+
+## Setup
+
+### Prerequisites
+
+- Python 3.8+
+- Pip package manager
+- OpenCV, PyTorch, and Torchvision
+
+1. utils.py
+This file contains helper functions and constants for the project.
+
+- COLOR_DICT
+This dictionary contains the color codes for different object categories. Each category is assigned a unique RGB color for drawing the bounding boxes.
+
+- COCO_INSTANCE_CATEGORY_NAMES
+This list stores the names of object categories based on the COCO dataset. Categories include 'person', 'car', 'dog', 'cat', etc., and they are used to label detected objects.
+
+- get_predictions(img, model, transform, threshold=0.7)
+This function takes an image, passes it through the object detection model, and returns bounding boxes, class labels, and confidence scores for detected objects. It filters predictions based on a confidence threshold.
+
+Parameters:
+
+img: Input image (frame from the video).
+model: Loaded Faster-RCNN model.
+transform: The transformation function to convert the image to a tensor.
+threshold: Minimum confidence score to consider an object detected.
+2. model.py
+This file handles model loading and image transformations.
+
+- load_model()
+Loads the pre-trained Faster-RCNN model with a ResNet-50 backbone. The model is pre-trained on the COCO dataset.
+
+- get_transform()
+Defines and returns the transformation used to convert images (OpenCV frames) into PyTorch tensors. The main transformation is ToTensor().
+
+3. live_detection.py
+The main script that runs the object detection system in real-time.
+
+- live_object_detection()
+This function captures frames from the webcam and performs object detection on each frame. It draws bounding boxes around detected objects and displays the result in a window.
+
+The frame is first captured using cv2.VideoCapture().
+get_predictions() is called to detect objects.
+For each detected object, the bounding box and label are drawn on the frame using OpenCV functions cv2.rectangle() and cv2.putText().
+The detection process runs in a loop and can be stopped by pressing the q key.
+
